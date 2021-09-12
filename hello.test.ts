@@ -1,8 +1,11 @@
-import { Subject } from 'rxjs';
+import { interval, Subject } from 'rxjs';
 
 
 const s = new Subject<number>();
-s.subscribe(val => console.log(val, process.hrtime()));
+s.subscribe(val => console.log('sub 1', val, process.hrtime()));
+setTimeout(() => {
+  s.subscribe(val => console.log('sub 2', val, process.hrtime()))
+}, 500);
 
 console.log('nexting 1...');
 s.next(1);
