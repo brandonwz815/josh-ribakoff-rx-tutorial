@@ -1,20 +1,18 @@
-import { combineLatest, merge, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 
 
-it('works', () => {
-  const a = new Subject<number>();
-  const b = new Subject<number>();
-  // const c = merge([a, b]);
-  const c = combineLatest([a, b]);
+const s = new Subject<number>();
+s.subscribe(val => console.log(val, process.hrtime()));
 
-  // consumer
-  // c.subscribe(console.log);
-  c.subscribe(([a, b]) => console.log(a + b));
+console.log('nexting 1...');
+s.next(1);
 
-  // producer
-  // a.next('hello world');
-  // b.next('hello world 2');
-  a.next(3);
-  b.next(3);
-  b.next(4);
-});
+setTimeout(() => {
+  console.log('nexting 2...');
+  s.next(2);
+}, 1000);
+
+setTimeout(() => {
+  console.log('nexting 3...');
+  s.next(3);
+}, 2000);
